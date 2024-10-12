@@ -11,21 +11,12 @@
 	<groupId>be.pxl.services</groupId>
 	<artifactId>ECommerce_DimitriGiannakos</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 	<name>ECommerce_DimitriGiannakos</name>
 	<description>ECommerce_DimitriGiannakos</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
+	<modules>
+		<module>productCatalogus-service</module>
+	</modules>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
