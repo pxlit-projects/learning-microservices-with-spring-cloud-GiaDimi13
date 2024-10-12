@@ -46,7 +46,7 @@ public class ProductController {
         return ResponseEntity.ok(products);
     }
 
-    //product filteren 
+    //product filteren
     @GetMapping("/filter")
     public ResponseEntity<List<ProductResponse>> filterProducts(
             @RequestParam(required = false) String category,

@@ -16,7 +16,8 @@
 	<description>ECommerce_DimitriGiannakos</description>
 	<modules>
 		<module>productCatalogus-service</module>
-	</modules>
+        <module>winkelwagen-service</module>
+    </modules>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
