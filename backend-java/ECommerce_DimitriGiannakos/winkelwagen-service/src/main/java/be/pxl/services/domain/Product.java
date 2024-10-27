@@ -13,18 +13,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Product {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    private Long winkelwagenId;
-    private String name;
-    private String description;
-    private Double price;
-    @ManyToOne
-    private Category category;
-    private String label; // Labels for additional categorization or tags
-    private boolean Sustainable;
-
+    private Long productId;
+    private int aantal;
 }

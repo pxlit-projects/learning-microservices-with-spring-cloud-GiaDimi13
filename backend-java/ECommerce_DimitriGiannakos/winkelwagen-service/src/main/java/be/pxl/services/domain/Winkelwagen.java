@@ -22,8 +22,8 @@ public class Winkelwagen {
     private Long id;
 
     //private Long customerId; // Referentie naar de klant
-    @ElementCollection
-    private List<ProductDTO> items; // Lijst van producten in de winkelwagen
+    @OneToMany(mappedBy = "winkelwagen")
+    private List<Product> products;
 
     private double totalPrice; // Totaalprijs van de winkelwagen
 }

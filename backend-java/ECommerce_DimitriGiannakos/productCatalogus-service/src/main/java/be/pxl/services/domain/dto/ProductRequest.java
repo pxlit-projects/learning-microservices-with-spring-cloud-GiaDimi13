@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class ProductRequest {
     private Long id;
 
+    private Long winkelwagenId;
     private String name;
     private String description;
     private Double price;
