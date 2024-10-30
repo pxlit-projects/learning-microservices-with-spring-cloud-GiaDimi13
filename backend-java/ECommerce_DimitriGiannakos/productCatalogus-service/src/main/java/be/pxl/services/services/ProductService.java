@@ -21,6 +21,23 @@ public class ProductService implements IProductService{
 
 
     @Override
+    public List<ProductResponse> getAllProducts() {
+        List<Product> products = productRepository.findAll();
+
+        return products.stream().map(this::mapToProductResponse).toList();
+    }
+
+    private ProductResponse mapToProductResponse(Product product) {
+        return ProductResponse.builder()
+                .name(product.getName())
+                .description(product.getDescription())
+                .price(product.getPrice())
+                .category(product.getCategory())
+                .label(product.getLabel())
+                .sustainable(product.isSustainable())
+                .build();
+    }
+    @Override
     public void addProduct(ProductRequest productRequest) {
         Product product = Product.builder()
                 .name(productRequest.getName())
@@ -54,6 +71,7 @@ public class ProductService implements IProductService{
         productRepository.delete(product);
     }
 
+/*
     @Override
     public List<ProductResponse> searchProducts(String query) {
         return productRepository.findProductsByNameContaining(query);
@@ -63,5 +81,7 @@ public class ProductService implements IProductService{
     public List<ProductResponse> filterProducts(String category, Double price, Boolean isSustainable) {
         return productRepository.findProductsByCategoryAndPriceAndSustainable(category, price, isSustainable);
     }
+
+ */
 
 }

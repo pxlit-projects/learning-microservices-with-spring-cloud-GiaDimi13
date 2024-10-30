@@ -18,6 +18,12 @@ public class ProductController {
 
     private final IProductService productService;
 
+    //producten opvragen
+    @GetMapping()
+    public ResponseEntity getProducts() {
+        return new ResponseEntity(productService.getAllProducts(), HttpStatus.OK);
+    }
+
     //product toevoegen
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -38,7 +44,7 @@ public class ProductController {
         productService.deleteProduct(productId);
         return ResponseEntity.noContent().build();
     }
-
+/*
     //product zoeken
     @GetMapping("/search")
     public ResponseEntity<List<ProductResponse>> searchProducts(@RequestParam String query) {
@@ -57,4 +63,6 @@ public class ProductController {
         return ResponseEntity.ok(products);
     }
 
+
+ */
 }

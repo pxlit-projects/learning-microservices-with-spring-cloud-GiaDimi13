@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
     //search
-    List<ProductResponse> findProductsByNameContaining(String query);
+    //List<ProductResponse> findProductsByNameContaining(String query);
 
     // filter
-    List<ProductResponse> findProductsByCategoryAndPriceAndSustainable(String category, Double price, Boolean isSustainable);
+    //List<ProductResponse> findProductsByCategoryAndPriceAndSustainable(String category, Double price, Boolean isSustainable);
 
 }

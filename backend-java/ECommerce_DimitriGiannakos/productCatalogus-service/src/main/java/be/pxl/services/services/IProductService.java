@@ -13,8 +13,12 @@ public interface IProductService {
 
     void deleteProduct(Long productId);
 
+    List<ProductResponse> getAllProducts();
+/*
     List<ProductResponse> searchProducts(String query);
 
     List<ProductResponse> filterProducts(String category, Double price, Boolean isSustainable);
+
+ */
 
 }

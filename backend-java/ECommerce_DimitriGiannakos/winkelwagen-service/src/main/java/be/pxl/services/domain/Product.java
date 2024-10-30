@@ -18,4 +18,6 @@ public class Product {
     private Long id;
     private Long productId;
     private int aantal;
+    @ManyToOne
+    private Winkelwagen winkelwagen;
 }

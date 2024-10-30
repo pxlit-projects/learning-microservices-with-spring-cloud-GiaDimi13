@@ -25,6 +25,6 @@ public class Product {
     @ManyToOne
     private Category category;
     private String label; // Labels for additional categorization or tags
-    private boolean Sustainable;
+    private boolean sustainable;
 
 }

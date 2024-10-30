@@ -1,5 +1,6 @@
 package be.pxl.services.domain.dto;
 
+import be.pxl.services.domain.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +17,7 @@ public class ProductResponse {
     private String name;
     private String description;
     private Double price;
-    private String category;
+    private Category category;
     private String label;
-    private boolean Sustainable;
+    private boolean sustainable;
 }
