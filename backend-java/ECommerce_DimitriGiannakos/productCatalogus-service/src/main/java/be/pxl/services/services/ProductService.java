@@ -1,6 +1,8 @@
 package be.pxl.services.services;
 
+import be.pxl.services.client.LogboekClient;
 import be.pxl.services.domain.Category;
+import be.pxl.services.domain.NotificationRequest;
 import be.pxl.services.domain.Product;
 import be.pxl.services.domain.dto.ProductRequest;
 import be.pxl.services.domain.dto.ProductResponse;
@@ -19,6 +21,7 @@ public class ProductService implements IProductService{
 
     private final ProductRepository productRepository;
 
+    private final LogboekClient logboekClient;
 
     @Override
     public List<ProductResponse> getAllProducts() {
@@ -47,6 +50,11 @@ public class ProductService implements IProductService{
                 .label(productRequest.getLabel())
                 .build();
         productRepository.save(product);
+
+        NotificationRequest notificationRequest = NotificationRequest.builder()
+                .message("Product Created")
+                .build();
+        logboekClient.sendNotification(notificationRequest);
     }
 
     @Override
