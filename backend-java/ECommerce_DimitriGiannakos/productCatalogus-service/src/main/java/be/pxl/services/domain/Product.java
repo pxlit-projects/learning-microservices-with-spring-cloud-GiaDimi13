@@ -24,7 +24,7 @@ public class Product {
     private Double price;
     @ManyToOne
     private Category category;
-    private String label; // Labels for additional categorization or tags
+    private String label;
     private boolean sustainable;
 
 }

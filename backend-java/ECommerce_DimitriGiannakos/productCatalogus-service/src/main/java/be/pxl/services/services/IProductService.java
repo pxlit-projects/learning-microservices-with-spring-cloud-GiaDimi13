@@ -14,11 +14,11 @@ public interface IProductService {
     void deleteProduct(Long productId);
 
     List<ProductResponse> getAllProducts();
-/*
-    List<ProductResponse> searchProducts(String query);
 
-    List<ProductResponse> filterProducts(String category, Double price, Boolean isSustainable);
+    ProductResponse getProductById(Long id);
 
- */
+    List<ProductResponse> getWinkelwagenById(Long winkelwagenId);
+
+    List<ProductResponse> filterProducts(String category, String label);
 
 }

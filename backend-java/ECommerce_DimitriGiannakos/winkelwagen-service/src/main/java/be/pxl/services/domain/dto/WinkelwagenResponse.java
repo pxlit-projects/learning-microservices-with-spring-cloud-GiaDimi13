@@ -1,6 +1,6 @@
-package be.pxl.services.domain;
+package be.pxl.services.domain.dto;
 
-import jakarta.persistence.*;
+import be.pxl.services.domain.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,22 +8,15 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Entity
-@Table(name = "winkelwagen")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Winkelwagen {
+public class WinkelwagenResponse {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Transient
     private List<Product> products;
-
     private int quantity;
-
     private double totalPrice; // Totaalprijs van de winkelwagen, misschien in frontEnd berekenen
+
 }
