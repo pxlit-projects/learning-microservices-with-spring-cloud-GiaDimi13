@@ -30,7 +30,7 @@ public class ProductController {
     }
 
     // Product toevoegen
-    @PostMapping
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public void addProduct(@RequestBody ProductRequest productRequest) {
         log.info("Adding a new product: {}", productRequest.getName());

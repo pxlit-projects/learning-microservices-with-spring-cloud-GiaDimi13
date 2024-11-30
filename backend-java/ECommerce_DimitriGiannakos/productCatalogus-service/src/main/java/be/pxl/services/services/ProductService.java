@@ -6,17 +6,17 @@ import be.pxl.services.domain.Product;
 import be.pxl.services.domain.dto.ProductRequest;
 import be.pxl.services.domain.dto.ProductResponse;
 import be.pxl.services.exceptions.ResourceNotFoundException;
-import be.pxl.services.repository.CategoryRepository;
 import be.pxl.services.repository.ProductRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +29,10 @@ public class ProductService implements IProductService{
     private final ProductRepository productRepository;
 
     private final LogboekClient logboekClient;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
 
     @Override
     public List<ProductResponse> getAllProducts() {
@@ -68,6 +72,7 @@ public class ProductService implements IProductService{
                 .build();
     }
 
+
     @Override
     public void addProduct(ProductRequest productRequest) {
         log.info("Adding a new product with name: {}", productRequest.getName());
@@ -85,6 +90,8 @@ public class ProductService implements IProductService{
                 .message("Product Created")
                 .build();
         logboekClient.sendNotification(notificationRequest);
+
+        rabbitTemplate.convertAndSend("myQueue", product);
         log.info("Notification sent for product creation with name: {}", productRequest.getName());
     }
 
