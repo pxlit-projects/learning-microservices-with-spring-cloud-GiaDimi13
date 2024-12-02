@@ -1,0 +1,6 @@
+2024-11-30T12:34:52.226+0100 INFO               [main]                         be.pxl.services.WinkelwagenTests - Starting WinkelwagenTests using Java 17.0.3.1 with PID 15520 (started by Administrator in C:\FullStackExamen\learning-microservices-with-spring-cloud-GiaDimi13\backend-java\ECommerce_DimitriGiannakos\winkelwagen-service)
+2024-11-30T12:34:52.228+0100 DEBUG              [main]                         be.pxl.services.WinkelwagenTests - Running with Spring Boot v3.3.4, Spring v6.1.13
+2024-11-30T12:34:52.231+0100 INFO               [main]                         be.pxl.services.WinkelwagenTests - No active profile set, falling back to 1 default profile: "default"
+2024-11-30T12:35:10.619+0100 INFO               [main]                         be.pxl.services.WinkelwagenTests - Started WinkelwagenTests in 20.427 seconds (process running for 44.494)
+2024-11-30T12:35:17.310+0100 INFO               [main]                         be.pxl.services.services.WinkelwagenService - Fetching winkelwagen with ID: 1
+2024-11-30T12:35:17.647+0100 ERROR              [main]                         be.pxl.services.services.WinkelwagenService - Winkelwagen with ID 1 not found

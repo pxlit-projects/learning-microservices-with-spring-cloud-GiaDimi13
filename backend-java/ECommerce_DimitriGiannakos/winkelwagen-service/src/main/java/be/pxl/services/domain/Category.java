@@ -1,20 +1,17 @@
 package be.pxl.services.domain;
 
-import jakarta.persistence.OneToMany;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+public enum Category {
+    ELECTRONICS("Electronics"),
+    CLOTHING("Clothing"),
+    FOOD("Food");
 
-import java.util.List;
+    private final String name;
 
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class Category {
-    private Long id;
-    private String name;
-    private String description;
-    private List<Product> product;
+    Category(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

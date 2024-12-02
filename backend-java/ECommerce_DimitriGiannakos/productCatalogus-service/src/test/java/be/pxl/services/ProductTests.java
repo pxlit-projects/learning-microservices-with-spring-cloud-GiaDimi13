@@ -10,7 +10,9 @@ import be.pxl.services.repository.ProductRepository;
 import be.pxl.services.services.ProductService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -30,6 +32,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -45,9 +49,8 @@ public class ProductTests {
     @Autowired
     private ProductRepository productRepository;
 
-    @MockBean
-    private LogboekClient logboekClient;
-
+    @Mock
+    private ProductService productService;
 
     @Container
     private static MySQLContainer sqlContainer =
@@ -60,10 +63,13 @@ public class ProductTests {
         registry.add("spring.datasource.password", sqlContainer::getPassword);
     }
 
+    @BeforeEach
+    void setup() {
+        productRepository.deleteAll();
+    }
+
     @Test
     public void getProduct() throws Exception {
-
-        // Maak een Product-object
         Product product = Product.builder()
                 .name("test")
                 .description("test test")
@@ -75,17 +81,14 @@ public class ProductTests {
 
         productRepository.save(product);
 
-        // Voer de GET-aanroep uit
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/product")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
 
-        // Haal de JSON-respons op
         String jsonResponse = mvcResult.getResponse().getContentAsString();
         List<Product> products = Arrays.asList(objectMapper.readValue(jsonResponse, Product[].class));
 
-        // Assertions voor producten
         assertEquals(1, products.size());
         assertEquals("test", product.getName());
         assertEquals(50.0, product.getPrice());
@@ -95,7 +98,6 @@ public class ProductTests {
 
     @Test
     public void createProduct() throws Exception {
-        // Create a sample product request
         Product product = Product.builder()
                 .id(1L)
                 .winkelwagenId(1L)
@@ -106,51 +108,61 @@ public class ProductTests {
                 .label("test-label")
                 .build();
 
-        // Convert the request to JSON
         String productRequestJson = objectMapper.writeValueAsString(product);
 
-        // Perform the POST request
         mockMvc.perform(MockMvcRequestBuilders.post("/api/product")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(productRequestJson))
                 .andExpect(status().isCreated());
 
-
-        // Assertions to verify the response
         List<Product> products = productRepository.findAll();
         assertEquals(1, products.size());
         assertEquals("test", products.get(0).getName());
         assertEquals(50.0, products.get(0).getPrice());
         assertEquals(Category.CLOTHING, products.get(0).getCategory());
         assertEquals("test-label", products.get(0).getLabel());
-
     }
-/*
-    @Test
-    void testUpdateProduct() throws Exception {
-        // Arrange: create a sample product and a ProductRequest
-        Long productId = 1L;
-        Product product = new Product(productId,1L,"Product", "description", 60.0,Category.CLOTHING ,"NEW_LABEL",true);
-        Product updatedProduct = new Product(productId,1L,"Updated Product", "Updated description", 50.0,Category.CLOTHING ,"NEW_updated_LABEL",true);
 
-        // Mock the service layer behavior
+    @Test
+    void UpdateProduct() throws Exception {
+        Long productId = 1L;
+        Product existingProduct = Product.builder()
+                .id(productId)
+                .name("Old Product")
+                .description("Old description")
+                .price(40.0)
+                .category(Category.CLOTHING)
+                .label("OLD_LABEL")
+                .sustainable(true)
+                .build();
+
+        productRepository.save(existingProduct);
+
+        ProductRequest productRequest = new ProductRequest(productId, 1L, "Updated Product", "Updated description", 60.0, Category.CLOTHING, "NEW_LABEL", true);
+
+        Product updatedProduct = new Product(
+                productId, 1L, "Updated Product", "Updated description", 60.0, Category.CLOTHING, "NEW_LABEL", true);
+
+
         when(productService.updateProduct(productId, productRequest)).thenReturn(updatedProduct);
 
-        // Act & Assert: perform PUT request and verify status and response body
-        mockMvc.perform(put("/api/product/{productId}", productId)
+
+        String responseContent = mockMvc.perform(put("/api/product/{productId}", productId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(productRequest)))
                 .andExpect(status().isOk()) // Expect HTTP 200 OK
-                .andExpect(jsonPath("$.name").value("Updated Product"))
-                .andExpect(jsonPath("$.description").value("Updated description"))
-                .andExpect(jsonPath("$.price").value(60.0))
-                .andExpect(jsonPath("$.category").value("CLOTHING"))
-                .andExpect(jsonPath("$.label").value("NEW_LABEL"));
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
 
-        // Verify that the productService.updateProduct was called with correct parameters
-        verify(productService, times(1)).updateProduct(productId, productRequest);
+        Product actualProduct = objectMapper.readValue(responseContent, Product.class);
+
+        assertEquals(updatedProduct.getId(), actualProduct.getId());
+        assertEquals(updatedProduct.getName(), actualProduct.getName());
+        assertEquals(updatedProduct.getDescription(), actualProduct.getDescription());
+        assertEquals(updatedProduct.getPrice(), actualProduct.getPrice());
+        assertEquals(updatedProduct.getCategory(), actualProduct.getCategory());
+        assertEquals(updatedProduct.getLabel(), actualProduct.getLabel());
+        assertEquals(updatedProduct.isSustainable(), actualProduct.isSustainable());
     }
-
- */
-
 }
