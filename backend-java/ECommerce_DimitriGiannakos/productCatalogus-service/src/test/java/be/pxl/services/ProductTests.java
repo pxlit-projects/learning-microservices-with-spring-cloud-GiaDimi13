@@ -74,7 +74,6 @@ public class ProductTests {
                 .name("test")
                 .description("test test")
                 .price(50.0)
-                .winkelwagenId(1L)
                 .category(Category.CLOTHING)
                 .sustainable(true)
                 .build();
@@ -100,7 +99,6 @@ public class ProductTests {
     public void createProduct() throws Exception {
         Product product = Product.builder()
                 .id(1L)
-                .winkelwagenId(1L)
                 .name("test")
                 .description("test description")
                 .price(50.0)
@@ -123,6 +121,7 @@ public class ProductTests {
         assertEquals("test-label", products.get(0).getLabel());
     }
 
+
     @Test
     void UpdateProduct() throws Exception {
         Long productId = 1L;
@@ -138,10 +137,10 @@ public class ProductTests {
 
         productRepository.save(existingProduct);
 
-        ProductRequest productRequest = new ProductRequest(productId, 1L, "Updated Product", "Updated description", 60.0, Category.CLOTHING, "NEW_LABEL", true);
+        ProductRequest productRequest = new ProductRequest("Updated Product", "Updated description", 60.0, Category.CLOTHING, "NEW_LABEL", true);
 
         Product updatedProduct = new Product(
-                productId, 1L, "Updated Product", "Updated description", 60.0, Category.CLOTHING, "NEW_LABEL", true);
+                productId, "Updated Product", "Updated description", 60.0, Category.CLOTHING, "NEW_LABEL", true);
 
 
         when(productService.updateProduct(productId, productRequest)).thenReturn(updatedProduct);

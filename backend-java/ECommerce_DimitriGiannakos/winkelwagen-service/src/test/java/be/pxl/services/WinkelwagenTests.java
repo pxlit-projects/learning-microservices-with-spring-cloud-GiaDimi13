@@ -55,16 +55,12 @@ public class WinkelwagenTests {
     @Test
     void getWinkelwagenById() throws Exception {
         Winkelwagen winkelwagen = Winkelwagen.builder()
-                .quantity(1)
-                .totalPrice(110.0)
                 .build();
 
         Winkelwagen savedWinkelwagen = winkelwagenRepository.save(winkelwagen);
 
         WinkelwagenResponse winkelwagenResponse = WinkelwagenResponse.builder()
                 .id(savedWinkelwagen.getId())
-                .quantity(1)
-                .totalPrice(110.0)
                 .build();
 
         when(winkelwagenService.getWinkelwagenById(savedWinkelwagen.getId())).thenReturn(winkelwagenResponse);
@@ -78,8 +74,6 @@ public class WinkelwagenTests {
         WinkelwagenResponse actualResponse = objectMapper.readValue(jsonResponse, WinkelwagenResponse.class);
 
         assertEquals(winkelwagenResponse.getId(), actualResponse.getId());
-        assertEquals(winkelwagenResponse.getQuantity(), actualResponse.getQuantity());
-        assertEquals(winkelwagenResponse.getTotalPrice(), actualResponse.getTotalPrice());
     }
 
     @Test

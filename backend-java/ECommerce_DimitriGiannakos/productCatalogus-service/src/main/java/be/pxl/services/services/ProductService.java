@@ -3,11 +3,11 @@ package be.pxl.services.services;
 import be.pxl.services.client.LogboekClient;
 import be.pxl.services.domain.NotificationRequest;
 import be.pxl.services.domain.Product;
+import be.pxl.services.domain.dto.ProductDTO;
 import be.pxl.services.domain.dto.ProductRequest;
 import be.pxl.services.domain.dto.ProductResponse;
 import be.pxl.services.exceptions.ResourceNotFoundException;
 import be.pxl.services.repository.ProductRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,11 +18,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ProductService implements IProductService{
+public class ProductService implements IProductService {
 
     private static final Logger log = LoggerFactory.getLogger(ProductService.class);
 
@@ -49,20 +48,10 @@ public class ProductService implements IProductService{
         return mapToProductResponse(product);
     }
 
-    @Override
-    public List<ProductResponse> getWinkelwagenById(Long winkelwagenId) {
-        List<Product> products = productRepository.findByWinkelwagenId(winkelwagenId);
-
-        if (products.isEmpty()){
-            System.out.println("No products found for winkelwagenId: " + winkelwagenId);
-        }
-
-        return products.stream().map(product -> mapToProductResponse(product)).toList();
-    }
-
     private ProductResponse mapToProductResponse(Product product) {
         log.debug("Mapping product with id: {} to ProductResponse", product.getId());
         return ProductResponse.builder()
+                .id(product.getId())
                 .name(product.getName())
                 .description(product.getDescription())
                 .price(product.getPrice())
@@ -82,16 +71,32 @@ public class ProductService implements IProductService{
                 .price(productRequest.getPrice())
                 .category(productRequest.getCategory())
                 .label(productRequest.getLabel())
+                .sustainable(productRequest.isSustainable())
                 .build();
         productRepository.save(product);
         log.debug("Product saved with id: {}", product.getId());
 
-        NotificationRequest notificationRequest = NotificationRequest.builder()
-                .message("Product Created")
-                .build();
-        logboekClient.sendNotification(notificationRequest);
+        try {
+            // Send notification
+            NotificationRequest notificationRequest = NotificationRequest.builder()
+                    .message("Product Created")
+                    .build();
+            logboekClient.sendNotification(notificationRequest);
+            log.info("Notification sent for product creation with name: {}", productRequest.getName());
+        } catch (Exception e) {
+            log.error("Failed to send notification for product: {}", productRequest.getName(), e);
+        }
 
-        rabbitTemplate.convertAndSend("myQueue", product);
+        ProductDTO productDTO = ProductDTO.builder()
+                .name(product.getName())
+                .description(product.getDescription())
+                .price(product.getPrice())
+                .category(product.getCategory().toString()) // Enum omzetten naar String
+                .label(product.getLabel())
+                .sustainable(product.isSustainable())
+                .build();
+
+        rabbitTemplate.convertAndSend("myQueue", productDTO);
         log.info("Notification sent for product creation with name: {}", productRequest.getName());
     }
 
@@ -106,6 +111,7 @@ public class ProductService implements IProductService{
         product.setPrice(productRequest.getPrice());
         product.setCategory(productRequest.getCategory());
         product.setLabel(productRequest.getLabel());
+        product.setSustainable(productRequest.isSustainable());
 
         productRepository.save(product);
         log.debug("Product with id: {} updated successfully", id);
@@ -122,25 +128,4 @@ public class ProductService implements IProductService{
         productRepository.delete(product);
         log.debug("Product with id: {} deleted successfully", productId);
     }
-
-    @Override
-    public List<ProductResponse> filterProducts(String category, String label) {
-        log.info("Get all products");
-        List<Product> filteredProducts = productRepository.findAll();
-
-        if (category != null) {
-            filteredProducts = filteredProducts.stream()
-                    .filter(product -> product.getCategory().getName().equalsIgnoreCase(category))
-                    .collect(Collectors.toList());
-        }
-
-        if (label != null) {
-            filteredProducts = filteredProducts.stream()
-                    .filter(product -> product.getLabel().equalsIgnoreCase(label))
-                    .collect(Collectors.toList());
-        }
-
-        return filteredProducts.stream().map(product -> mapToProductResponse(product)).toList();
-    }
-
 }

@@ -1,8 +1,10 @@
 package be.pxl.services.services;
 
 import be.pxl.services.client.ProductClient;
-import be.pxl.services.domain.Product;
 import be.pxl.services.domain.Winkelwagen;
+import be.pxl.services.domain.WinkelwagenItem;
+import be.pxl.services.domain.dto.ProductResponse;
+import be.pxl.services.domain.dto.WinkelwagenItemResponse;
 import be.pxl.services.domain.dto.WinkelwagenResponse;
 import be.pxl.services.repository.WinkelwagenRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +26,12 @@ public class WinkelwagenService implements IWinkelwagenService{
 
     private final WinkelwagenRepository winkelwagenRepository;
     private final ProductClient productClient;
+
+    @Override
+    public Winkelwagen createWinkelwagen() {
+        Winkelwagen winkelwagen = Winkelwagen.builder().build();
+        return winkelwagenRepository.save(winkelwagen);
+    }
 
     @Override
     public WinkelwagenResponse getWinkelwagenById(Long winkelwagenId) {
@@ -37,39 +47,54 @@ public class WinkelwagenService implements IWinkelwagenService{
     }
 
     private WinkelwagenResponse mapToWinkelwagenResponse(Winkelwagen winkelwagen) {
+        List<WinkelwagenItemResponse> items = winkelwagen.getItems().stream()
+                .map(item -> WinkelwagenItemResponse.builder()
+                        .productId(item.getProductId())
+                        .productName(item.getProductName())
+                        .productPrice(item.getProductPrice())
+                        .quantity(item.getQuantity())
+                        .subtotal(item.getProductPrice() * item.getQuantity())
+                        .build())
+                .collect(Collectors.toList());
+
+        double totalPrice = items.stream()
+                .mapToDouble(WinkelwagenItemResponse::getSubtotal)
+                .sum();
+
         return WinkelwagenResponse.builder()
-                .products(winkelwagen.getProducts())
-                .totalPrice(winkelwagen.getTotalPrice())
-                .quantity(winkelwagen.getQuantity())
+                .id(winkelwagen.getId())
+                .items(items)
+                .totalPrice(totalPrice)
                 .build();
     }
 
     @Override
     public void addProductToWinkelwagen(Long winkelwagenId, Long productId, int quantity) {
-        log.info("Adding product with ID: {} to winkelwagen with ID: {}", productId, winkelwagenId);
-
         Winkelwagen winkelwagen = winkelwagenRepository.findById(winkelwagenId)
-                .orElseThrow(() -> {
-                    log.error("Winkelwagen with ID {} not found", winkelwagenId);
-                    return new ResponseStatusException(HttpStatus.NOT_FOUND, "Winkelwagen not found");
-                });
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Winkelwagen not found"));
 
-        Product product = productClient.getProductById(productId);
-
+        ProductResponse product = productClient.getProductById(productId);
         if (product == null) {
-            log.error("Product with ID {} not found", productId);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
         }
 
-        log.info("Product {} added to winkelwagen. Current quantity: {}", product.getName(), quantity);
+        //product al in winkelwagen
+        Optional<WinkelwagenItem> existingItem = winkelwagen.getItems().stream()
+                .filter(item -> item.getProductId().equals(productId))
+                .findFirst();
 
-        winkelwagen.getProducts().add(product);
-        winkelwagen.setQuantity(winkelwagen.getQuantity() + quantity);
-        winkelwagen.setTotalPrice(winkelwagen.getTotalPrice() + product.getPrice() * quantity);
+        if (existingItem.isPresent()) {
+            existingItem.get().setQuantity(existingItem.get().getQuantity() + quantity);
+        } else {
+            WinkelwagenItem newItem = new WinkelwagenItem();
+            newItem.setProductId(product.getId());
+            newItem.setProductName(product.getName());
+            newItem.setProductPrice(product.getPrice());
+            newItem.setQuantity(quantity);
+            winkelwagen.getItems().add(newItem);
+        }
 
         winkelwagenRepository.save(winkelwagen);
-
-        log.info("Winkelwagen updated. Total price: {}, Total quantity: {}", winkelwagen.getTotalPrice(), winkelwagen.getQuantity());
     }
 
     @Override
@@ -82,18 +107,19 @@ public class WinkelwagenService implements IWinkelwagenService{
                     return new ResponseStatusException(HttpStatus.NOT_FOUND, "Winkelwagen not found");
                 });
 
-        List<Product> updatedProducts = winkelwagen.getProducts().stream()
-                .filter(product -> !product.getId().equals(productId))
-                .toList();
+        Optional<WinkelwagenItem> itemToRemove = winkelwagen.getItems().stream()
+                .filter(item -> item.getProductId().equals(productId))
+                .findFirst();
 
-        winkelwagen.setProducts(updatedProducts);
-
-        winkelwagen.setQuantity(updatedProducts.size());
-        winkelwagen.setTotalPrice(updatedProducts.stream().mapToDouble(Product::getPrice).sum());
-
-        winkelwagenRepository.save(winkelwagen);
-
-        log.info("Product removed. New total price: {}, New quantity: {}", winkelwagen.getTotalPrice(), winkelwagen.getQuantity());
+        if (itemToRemove.isPresent()) {
+            winkelwagen.getItems().remove(itemToRemove.get());
+            winkelwagenRepository.save(winkelwagen);
+            log.info("Product removed.");
+        } else {
+            log.warn("Product with ID {} not found in winkelwagen", productId);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found in winkelwagen");
+        }
     }
+
 }
 

@@ -1,5 +1,6 @@
 package be.pxl.services.services;
 
+import be.pxl.services.domain.Winkelwagen;
 import be.pxl.services.domain.dto.WinkelwagenResponse;
 
 public interface IWinkelwagenService {
@@ -9,4 +10,6 @@ public interface IWinkelwagenService {
     WinkelwagenResponse getWinkelwagenById(Long winkelwagenId);
 
     void removeProductFromWinkelwagen(Long winkelwagenId, Long productId);
+
+    Winkelwagen createWinkelwagen();
 }

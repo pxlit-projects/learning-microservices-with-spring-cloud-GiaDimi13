@@ -2,20 +2,18 @@ server:
   port: 8083
 
 spring:
-  main:
-    web-application-type: reactive
   cloud:
     gateway:
       globalcors:
         corsConfigurations:
           '[/**]':
             allowedOrigins:
-              - "*"
+              - "localhost"
             allowedMethods:
               - "*"
             allowedHeaders:
               - "*"
-            allowCredentials: false
+            allowCredentials: true
       discovery:
         locator:
           enabled: true
@@ -26,8 +24,26 @@ spring:
             - Path=/product/**
           filters:
             - RewritePath=/product/(?<path>.*), /$\{path}
+        - id: winkelwagen-service
+          uri: lb://winkelwagen-service
+          predicates:
+            - Path=/winkelwagen/**
+          filters:
+            - RewritePath=/winkelwagen/(?<path>.*), /$\{path}
+        - id: logboek-service
+          uri: lb://logboek-service
+          predicates:
+            - Path=/logboek/**
+          filters:
+            - RewritePath=/logboek/(?<path>.*), /$\{path}
+
 
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8062/eureka
+  instance:
+    hostname: localhost
+    preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 5
+    leaseExpirationDurationInSeconds: 10

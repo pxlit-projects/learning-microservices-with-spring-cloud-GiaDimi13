@@ -17,8 +17,4 @@ public interface IProductService {
 
     ProductResponse getProductById(Long id);
 
-    List<ProductResponse> getWinkelwagenById(Long winkelwagenId);
-
-    List<ProductResponse> filterProducts(String category, String label);
-
 }

@@ -1,0 +1,4 @@
+2024-12-03T15:01:28.121+0100 INFO               [main]                         be.pxl.services.ProductTests  - Starting ProductTests using Java 17.0.3.1 with PID 3236 (started by Administrator in C:\FullStackExamen\learning-microservices-with-spring-cloud-GiaDimi13\backend-java\ECommerce_DimitriGiannakos\productCatalogus-service)
+2024-12-03T15:01:28.128+0100 DEBUG              [main]                         be.pxl.services.ProductTests  - Running with Spring Boot v3.1.4, Spring v6.0.12
+2024-12-03T15:01:28.129+0100 INFO               [main]                         be.pxl.services.ProductTests  - No active profile set, falling back to 1 default profile: "default"
+2024-12-03T15:01:42.753+0100 INFO               [main]                         be.pxl.services.ProductTests  - Started ProductTests in 17.041 seconds (process running for 42.373)

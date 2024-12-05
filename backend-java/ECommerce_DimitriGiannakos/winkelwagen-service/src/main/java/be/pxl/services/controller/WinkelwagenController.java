@@ -16,6 +16,11 @@ public class WinkelwagenController {
     private final WinkelwagenService winkelwagenService;
 
 
+    @PostMapping
+    public ResponseEntity<Winkelwagen> createWinkelwagen() {
+        Winkelwagen winkelwagen = winkelwagenService.createWinkelwagen();
+        return ResponseEntity.status(HttpStatus.CREATED).body(winkelwagen);
+    }
     @GetMapping("/{winkelwagenId}")
     public ResponseEntity<WinkelwagenResponse> getWinkelwagenById(@PathVariable Long winkelwagenId) {
         return new ResponseEntity<>(winkelwagenService.getWinkelwagenById(winkelwagenId), HttpStatus.OK);

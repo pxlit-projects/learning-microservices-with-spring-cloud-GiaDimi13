@@ -1,0 +1,78 @@
+2024-12-02T17:49:40.566+0100 INFO               [main]                         be.pxl.services.ProductTests  - Starting ProductTests using Java 17.0.3.1 with PID 30284 (started by Administrator in C:\FullStackExamen\learning-microservices-with-spring-cloud-GiaDimi13\backend-java\ECommerce_DimitriGiannakos\productCatalogus-service)
+2024-12-02T17:49:40.573+0100 DEBUG              [main]                         be.pxl.services.ProductTests  - Running with Spring Boot v3.3.4, Spring v6.1.13
+2024-12-02T17:49:40.574+0100 INFO               [main]                         be.pxl.services.ProductTests  - No active profile set, falling back to 1 default profile: "default"
+2024-12-02T17:50:02.621+0100 INFO               [main]                         be.pxl.services.ProductTests  - Started ProductTests in 24.633 seconds (process running for 54.237)
+2024-12-02T17:50:05.812+0100 INFO               [main]                         be.pxl.services.controller.ProductController - Updating product with ID: 1
+2024-12-02T17:50:05.813+0100 INFO               [main]                         be.pxl.services.services.ProductService - Updating product with id: 1
+2024-12-02T17:50:05.947+0100 DEBUG              [main]                         be.pxl.services.services.ProductService - Product with id: 1 updated successfully
+2024-12-02T17:50:05.948+0100 INFO               [main]                         be.pxl.services.controller.ProductController - Product with ID 1 updated successfully
+2024-12-02T17:50:06.223+0100 INFO               [main]                         be.pxl.services.controller.ProductController - Fetching all products
+2024-12-02T17:50:06.224+0100 DEBUG              [main]                         be.pxl.services.services.ProductService - Fetching all products from the repository
+2024-12-02T17:50:06.654+0100 INFO               [main]                         be.pxl.services.services.ProductService - Fetched 2 products
+2024-12-02T17:50:06.656+0100 DEBUG              [main]                         be.pxl.services.services.ProductService - Mapping product with id: 1 to ProductResponse
+2024-12-02T17:50:06.660+0100 DEBUG              [main]                         be.pxl.services.services.ProductService - Mapping product with id: 2 to ProductResponse
+2024-12-02T17:50:06.735+0100 INFO               [main]                         be.pxl.services.controller.ProductController - Adding a new product: test
+2024-12-02T17:50:06.736+0100 INFO               [main]                         be.pxl.services.services.ProductService - Adding a new product with name: test
+2024-12-02T17:50:06.793+0100 DEBUG              [main]                         be.pxl.services.services.ProductService - Product saved with id: 3
+2024-12-02T17:54:35.087+0100 INFO               [main]                         be.pxl.services.ProductTests  - Starting ProductTests using Java 17.0.3.1 with PID 3432 (started by Administrator in C:\FullStackExamen\learning-microservices-with-spring-cloud-GiaDimi13\backend-java\ECommerce_DimitriGiannakos\productCatalogus-service)
+2024-12-02T17:54:35.088+0100 DEBUG              [main]                         be.pxl.services.ProductTests  - Running with Spring Boot v3.3.4, Spring v6.1.13
+2024-12-02T17:54:35.090+0100 INFO               [main]                         be.pxl.services.ProductTests  - No active profile set, falling back to 1 default profile: "default"
+2024-12-02T17:54:47.321+0100 INFO               [main]                         be.pxl.services.ProductTests  - Started ProductTests in 14.276 seconds (process running for 32.577)
+2024-12-02T17:54:49.566+0100 INFO               [main]                         be.pxl.services.controller.ProductController - Fetching all products
+2024-12-02T17:54:49.567+0100 DEBUG              [main]                         be.pxl.services.services.ProductService - Fetching all products from the repository
+2024-12-02T17:54:49.974+0100 INFO               [main]                         be.pxl.services.services.ProductService - Fetched 1 products
+2024-12-02T17:54:49.976+0100 DEBUG              [main]                         be.pxl.services.services.ProductService - Mapping product with id: 1 to ProductResponse
+2024-12-02T17:56:50.134+0100 INFO               [main]                         be.pxl.services.ProductTests  - Starting ProductTests using Java 17.0.3.1 with PID 3456 (started by Administrator in C:\FullStackExamen\learning-microservices-with-spring-cloud-GiaDimi13\backend-java\ECommerce_DimitriGiannakos\productCatalogus-service)
+2024-12-02T17:56:50.138+0100 DEBUG              [main]                         be.pxl.services.ProductTests  - Running with Spring Boot v3.3.4, Spring v6.1.13
+2024-12-02T17:56:50.140+0100 INFO               [main]                         be.pxl.services.ProductTests  - No active profile set, falling back to 1 default profile: "default"
+2024-12-02T17:57:06.390+0100 INFO               [main]                         be.pxl.services.ProductTests  - Started ProductTests in 20.443 seconds (process running for 47.83)
+2024-12-02T17:57:08.738+0100 INFO               [main]                         be.pxl.services.controller.ProductController - Updating product with ID: 1
+2024-12-02T17:57:08.738+0100 INFO               [main]                         be.pxl.services.services.ProductService - Updating product with id: 1
+2024-12-02T17:57:08.828+0100 DEBUG              [main]                         be.pxl.services.services.ProductService - Product with id: 1 updated successfully
+2024-12-02T17:57:08.829+0100 INFO               [main]                         be.pxl.services.controller.ProductController - Product with ID 1 updated successfully
+2024-12-02T17:57:09.052+0100 INFO               [main]                         be.pxl.services.controller.ProductController - Fetching all products
+2024-12-02T17:57:09.053+0100 DEBUG              [main]                         be.pxl.services.services.ProductService - Fetching all products from the repository
+2024-12-02T17:57:09.075+0100 INFO               [main]                         be.pxl.services.services.ProductService - Fetched 1 products
+2024-12-02T17:57:09.077+0100 DEBUG              [main]                         be.pxl.services.services.ProductService - Mapping product with id: 2 to ProductResponse
+2024-12-02T17:57:09.145+0100 INFO               [main]                         be.pxl.services.controller.ProductController - Adding a new product: test
+2024-12-02T17:57:09.145+0100 INFO               [main]                         be.pxl.services.services.ProductService - Adding a new product with name: test
+2024-12-02T17:57:09.166+0100 DEBUG              [main]                         be.pxl.services.services.ProductService - Product saved with id: 3
+2024-12-02T17:59:14.606+0100 INFO               [main]                         be.pxl.services.ProductTests  - Starting ProductTests using Java 17.0.3.1 with PID 7612 (started by Administrator in C:\FullStackExamen\learning-microservices-with-spring-cloud-GiaDimi13\backend-java\ECommerce_DimitriGiannakos\productCatalogus-service)
+2024-12-02T17:59:14.610+0100 DEBUG              [main]                         be.pxl.services.ProductTests  - Running with Spring Boot v3.3.4, Spring v6.1.13
+2024-12-02T17:59:14.612+0100 INFO               [main]                         be.pxl.services.ProductTests  - No active profile set, falling back to 1 default profile: "default"
+2024-12-02T17:59:37.069+0100 INFO               [main]                         be.pxl.services.ProductTests  - Started ProductTests in 27.11 seconds (process running for 57.635)
+2024-12-02T17:59:40.872+0100 INFO               [main]                         be.pxl.services.controller.ProductController - Updating product with ID: 1
+2024-12-02T17:59:40.873+0100 INFO               [main]                         be.pxl.services.services.ProductService - Updating product with id: 1
+2024-12-02T17:59:41.077+0100 DEBUG              [main]                         be.pxl.services.services.ProductService - Product with id: 1 updated successfully
+2024-12-02T17:59:41.077+0100 INFO               [main]                         be.pxl.services.controller.ProductController - Product with ID 1 updated successfully
+2024-12-02T17:59:41.500+0100 INFO               [main]                         be.pxl.services.controller.ProductController - Fetching all products
+2024-12-02T17:59:41.502+0100 DEBUG              [main]                         be.pxl.services.services.ProductService - Fetching all products from the repository
+2024-12-02T17:59:41.532+0100 INFO               [main]                         be.pxl.services.services.ProductService - Fetched 1 products
+2024-12-02T17:59:41.534+0100 DEBUG              [main]                         be.pxl.services.services.ProductService - Mapping product with id: 2 to ProductResponse
+2024-12-02T17:59:41.647+0100 INFO               [main]                         be.pxl.services.controller.ProductController - Adding a new product: test
+2024-12-02T17:59:41.648+0100 INFO               [main]                         be.pxl.services.services.ProductService - Adding a new product with name: test
+2024-12-02T17:59:41.678+0100 DEBUG              [main]                         be.pxl.services.services.ProductService - Product saved with id: 3
+2024-12-02T18:04:31.677+0100 INFO               [main]                         be.pxl.services.ProductTests  - Starting ProductTests using Java 17.0.3.1 with PID 21320 (started by Administrator in C:\FullStackExamen\learning-microservices-with-spring-cloud-GiaDimi13\backend-java\ECommerce_DimitriGiannakos\productCatalogus-service)
+2024-12-02T18:04:31.682+0100 DEBUG              [main]                         be.pxl.services.ProductTests  - Running with Spring Boot v3.3.4, Spring v6.1.13
+2024-12-02T18:04:31.684+0100 INFO               [main]                         be.pxl.services.ProductTests  - No active profile set, falling back to 1 default profile: "default"
+2024-12-02T18:04:54.991+0100 INFO               [main]                         be.pxl.services.ProductTests  - Started ProductTests in 28.108 seconds (process running for 62.249)
+2024-12-02T18:04:58.962+0100 INFO               [main]                         be.pxl.services.controller.ProductController - Updating product with ID: 1
+2024-12-02T18:04:58.963+0100 INFO               [main]                         be.pxl.services.services.ProductService - Updating product with id: 1
+2024-12-02T18:04:59.084+0100 DEBUG              [main]                         be.pxl.services.services.ProductService - Product with id: 1 updated successfully
+2024-12-02T18:04:59.085+0100 INFO               [main]                         be.pxl.services.controller.ProductController - Product with ID 1 updated successfully
+2024-12-02T18:04:59.451+0100 INFO               [main]                         be.pxl.services.controller.ProductController - Fetching all products
+2024-12-02T18:04:59.452+0100 DEBUG              [main]                         be.pxl.services.services.ProductService - Fetching all products from the repository
+2024-12-02T18:04:59.489+0100 INFO               [main]                         be.pxl.services.services.ProductService - Fetched 1 products
+2024-12-02T18:04:59.491+0100 DEBUG              [main]                         be.pxl.services.services.ProductService - Mapping product with id: 2 to ProductResponse
+2024-12-02T18:04:59.599+0100 INFO               [main]                         be.pxl.services.controller.ProductController - Adding a new product: test
+2024-12-02T18:04:59.600+0100 INFO               [main]                         be.pxl.services.services.ProductService - Adding a new product with name: test
+2024-12-02T18:04:59.630+0100 DEBUG              [main]                         be.pxl.services.services.ProductService - Product saved with id: 3
+2024-12-02T18:05:01.047+0100 INFO               [main]                         be.pxl.services.services.ProductService - Notification sent for product creation with name: test
+2024-12-02T18:30:24.840+0100 INFO               [main]                         be.pxl.services.ProductTests  - Starting ProductTests using Java 17.0.3.1 with PID 14120 (started by Administrator in C:\FullStackExamen\learning-microservices-with-spring-cloud-GiaDimi13\backend-java\ECommerce_DimitriGiannakos\productCatalogus-service)
+2024-12-02T18:30:24.842+0100 DEBUG              [main]                         be.pxl.services.ProductTests  - Running with Spring Boot v3.3.4, Spring v6.1.13
+2024-12-02T18:30:24.845+0100 INFO               [main]                         be.pxl.services.ProductTests  - No active profile set, falling back to 1 default profile: "default"
+2024-12-02T18:30:42.133+0100 INFO               [main]                         be.pxl.services.ProductTests  - Started ProductTests in 19.548 seconds (process running for 37.756)
+2024-12-02T18:30:44.229+0100 INFO               [main]                         be.pxl.services.controller.ProductController - Fetching all products
+2024-12-02T18:30:44.230+0100 DEBUG              [main]                         be.pxl.services.services.ProductService - Fetching all products from the repository
+2024-12-02T18:30:44.267+0100 INFO               [main]                         be.pxl.services.services.ProductService - Fetched 1 products
+2024-12-02T18:30:44.269+0100 DEBUG              [main]                         be.pxl.services.services.ProductService - Mapping product with id: 1 to ProductResponse

@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,10 +21,6 @@ public class Winkelwagen {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Transient
-    private List<Product> products;
-
-    private int quantity;
-
-    private double totalPrice; // Totaalprijs van de winkelwagen, misschien in frontEnd berekenen
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<WinkelwagenItem> items = new ArrayList<>();
 }

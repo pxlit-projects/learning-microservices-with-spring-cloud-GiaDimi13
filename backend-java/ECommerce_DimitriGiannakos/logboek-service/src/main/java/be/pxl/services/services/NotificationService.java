@@ -21,6 +21,6 @@ public class NotificationService implements INotificationService{
 
     @RabbitListener(queues = "myQueue")
     public void handleProductMessage(ProductDTO product) {
-        System.out.println("Product met Id: " + product.getId() + "en naam:" + product.getName());
+        System.out.println("Product met naam:" + product.getName());
     }
 }
