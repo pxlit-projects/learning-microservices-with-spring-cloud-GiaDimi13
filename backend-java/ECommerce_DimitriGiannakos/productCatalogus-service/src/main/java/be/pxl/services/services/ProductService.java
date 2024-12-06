@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -76,16 +77,12 @@ public class ProductService implements IProductService {
         productRepository.save(product);
         log.debug("Product saved with id: {}", product.getId());
 
-        try {
-            // Send notification
-            NotificationRequest notificationRequest = NotificationRequest.builder()
-                    .message("Product Created")
-                    .build();
-            logboekClient.sendNotification(notificationRequest);
-            log.info("Notification sent for product creation with name: {}", productRequest.getName());
-        } catch (Exception e) {
-            log.error("Failed to send notification for product: {}", productRequest.getName(), e);
-        }
+
+        NotificationRequest notificationRequest = NotificationRequest.builder()
+                .message("Product Created")
+                .build();
+        logboekClient.sendNotification(notificationRequest);
+        log.info("Notification sent for product creation with name: {}", productRequest.getName());
 
         ProductDTO productDTO = ProductDTO.builder()
                 .name(product.getName())
@@ -116,6 +113,21 @@ public class ProductService implements IProductService {
         productRepository.save(product);
         log.debug("Product with id: {} updated successfully", id);
 
+
+        String message = String.format(
+                "Product '%s' (ID: %d) updated by user '%s' on %s",
+                product.getName(),
+                id,
+                "Admin",
+                LocalDateTime.now()
+        );
+
+        NotificationRequest notificationRequest = NotificationRequest.builder()
+                .message(message)
+                .build();
+
+        logboekClient.sendNotification(notificationRequest);
+        log.info("Logbook notification sent successfully for product with id: {}", id);
         return product;
     }
 
